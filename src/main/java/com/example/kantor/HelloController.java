@@ -2,6 +2,8 @@ package com.example.kantor;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,76 +16,83 @@ public class HelloController {
 
     public String jsonString;
 
+    public Double kupUSD, sprzedajUSD, kupEUR, sprzedajEUR, kupCHF, sprzedajCHF ,kupGBP, sprzedajGBP, kupCNY, sprzedajCNY;
+
     public void initialize() throws IOException {
 
         laczenie("http://api.nbp.pl/api/exchangerates/rates/a/usd/?format=json");
-        //JSONObject jsonObject = new JSONObject(jsonString);
+        JSONObject jsonObject = new JSONObject(jsonString);
         JSONArray osobyArray = jsonObject.getJSONArray("rates");
-        JSONObject osobaObject = osobyArray.getJSONObject();
 
-        String kupUSD = osobaObject.getString("imie");
-        kupUSD = Double.parseDouble(kupUSD) + 0,22;
-        String sprzedajUSD = osobaObject.getString("imie");
-        sprzedajUSD = Double.parseDouble(sprzedajUSD);
+        for (int i = 0; i < osobyArray.length(); i++) {
+            JSONObject osobaObject = osobyArray.getJSONObject(i);
+            kupUSD = osobaObject.getDouble("mid");
+            kupUSD = kupUSD + 0.22;
+            sprzedajUSD = osobaObject.getDouble("mid");
+        }
 
-        lb1.setText(kupUSD);
-        lb2.setText(sprzedajUSD);
+        lb1.setText(kupUSD.toString());
+        lb2.setText(sprzedajUSD.toString());
 
 
         laczenie("http://api.nbp.pl/api/exchangerates/rates/a/eur/?format=json");
-        //JSONObject jsonObject = new JSONObject(jsonString);
-        JSONArray osobyArray = jsonObject.getJSONArray("rates");
-        JSONObject osobaObject = osobyArray.getJSONObject();
+        jsonObject = new JSONObject(jsonString);
+        osobyArray = jsonObject.getJSONArray("rates");
 
-        String kupEUR = osobaObject.getString("imie");
-        kupEUR = Double.parseDouble(kupEUR) + 0,22;
-        String sprzedajEUR = osobaObject.getString("imie");
-        sprzedajEUR = Double.parseDouble(sprzedajEUR);
+        for (int i = 0; i < osobyArray.length(); i++) {
+            JSONObject osobaObject = osobyArray.getJSONObject(i);
+            kupEUR = osobaObject.getDouble("mid");
+            kupEUR = kupEUR + 0.22;
+            sprzedajEUR = osobaObject.getDouble("mid");
+        }
 
-        lb3.setText(kupEUR);
-        lb4.setText(sprzedajEUR);
+        lb3.setText(String.format("%.4f", kupEUR));
+        lb4.setText(sprzedajEUR.toString());
 
 
         laczenie("http://api.nbp.pl/api/exchangerates/rates/a/chf/?format=json");
-        //JSONObject jsonObject = new JSONObject(jsonString);
-        JSONArray osobyArray = jsonObject.getJSONArray("rates");
-        JSONObject osobaObject = osobyArray.getJSONObject();
+        jsonObject = new JSONObject(jsonString);
+        osobyArray = jsonObject.getJSONArray("rates");
 
-        String kupCHF = osobaObject.getString("imie");
-        kupCHF = Double.parseDouble(kupCHF) + 0,22;
-        String sprzedajCHF = osobaObject.getString("imie");
-        sprzedajCHF = Double.parseDouble(sprzedajCHF);
+        for (int i = 0; i < osobyArray.length(); i++) {
+            JSONObject osobaObject = osobyArray.getJSONObject(i);
+            kupCHF = osobaObject.getDouble("mid");
+            kupCHF = kupCHF + 0.22;
+            sprzedajCHF = osobaObject.getDouble("mid");
+        }
 
-        lb5.setText(kupCHF);
-        lb6.setText(sprzedajCHF);
+        lb5.setText(String.format("%.4f", kupCHF));
+        lb6.setText(sprzedajCHF.toString());
 
 
         laczenie("http://api.nbp.pl/api/exchangerates/rates/a/gbp/?format=json");
-        //JSONObject jsonObject = new JSONObject(jsonString);
-        JSONArray osobyArray = jsonObject.getJSONArray("rates");
-        JSONObject osobaObject = osobyArray.getJSONObject();
+         jsonObject = new JSONObject(jsonString);
+         osobyArray = jsonObject.getJSONArray("rates");
 
-        String kupGBP = osobaObject.getString("imie");
-        kupGBP = Double.parseDouble(kupGBP) + 0,22;
-        String sprzedajGBP = osobaObject.getString("imie");
-        sprzedajGBP = Double.parseDouble(sprzedajGBP);
+         for (int i = 0; i < osobyArray.length(); i++) {
+            JSONObject osobaObject = osobyArray.getJSONObject(i);
+            kupGBP = osobaObject.getDouble("mid");
+            kupGBP = kupGBP + 0.22;
+            sprzedajGBP = osobaObject.getDouble("mid");
+        }
 
-        lb7.setText(kupGBP);
-        lb8.setText(sprzedajGBP);
+        lb7.setText(kupGBP.toString());
+        lb8.setText(sprzedajGBP.toString());
 
 
         laczenie("http://api.nbp.pl/api/exchangerates/rates/a/cny/?format=json");
-        //JSONObject jsonObject = new JSONObject(jsonString);
-        JSONArray osobyArray = jsonObject.getJSONArray("rates");
-        JSONObject osobaObject = osobyArray.getJSONObject();
+        jsonObject = new JSONObject(jsonString);
+        osobyArray = jsonObject.getJSONArray("rates");
+        for (int i = 0; i < osobyArray.length(); i++) {
+            JSONObject osobaObject = osobyArray.getJSONObject(i);
+            kupCNY = osobaObject.getDouble("mid");
+            kupCNY = kupCNY + 0.22;
+            sprzedajCNY = osobaObject.getDouble("mid");
+        }
 
-        String kupCNY = osobaObject.getString("imie");
-        kupCNY = Double.parseDouble(kupCNY) + 0,22;
-        String sprzedajCNY = osobaObject.getString("imie");
-        sprzedajCNY = Double.parseDouble(kupCNY);
+        lb9.setText(String.format("%.4f", kupCNY));
+        lb10.setText(sprzedajCNY.toString());
 
-        lb9.setText(kupCNY);
-        lb10.setText(sprzedajCNY);
     }
 
     public void laczenie(String apiUrl) throws IOException {
